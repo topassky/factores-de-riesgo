@@ -17,12 +17,13 @@ de datos por cada rengión económico.
  
 """
 
-def norm_sig(sig):#Funcion para normalizar un conjunto de datos nxm
+def norm_sig(sig,dimnueva):#Funcion para normalizar un conjunto de datos nxm
 
     vector=[]
     normsigSTR=[]
     Reader=csv.reader(sig)
     for row in Reader:
+        row=row[0:dimnueva]
         for j in row:
             vector.append(float(j))
     maximo=max(j)
@@ -46,14 +47,14 @@ with open("objetivo.csv") as nueva:
     Reader=csv.reader(nueva)
     for row in Reader:
         dimnueva=len(row)
-        vectorM =norm_sig(nueva)
+        vectorM =norm_sig(nueva,dimnueva)
         
 
 for i in glob.glob(args["dataset"]+"/*.csv"):
     csvid=i[i.rfind("/"+args["dataset"])+1:]
     vectorH=[]
     with open(csvid) as empresa: 
-        empresanormalizada=norm_sig(empresa)
+        empresanormalizada=norm_sig(empresa,dimnueva)
         output.write("%s,%s\n" % (csvid, ",".join((empresanormalizada))))
 
 output.close()
